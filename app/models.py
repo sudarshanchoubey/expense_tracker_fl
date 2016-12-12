@@ -1,8 +1,8 @@
-from app import db
+from app import db, lm
 from flask_login import LoginManager, UserMixin
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     social_id = db.Column(db.String(64), nullable=False, unique=True)
@@ -12,6 +12,11 @@ class User(db.Model):
 
     def __repr__(self):
         return "<User {0}>".format(self.nickname)
+
+
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 class Expense(db.Model):
