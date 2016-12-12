@@ -1,0 +1,14 @@
+<html>
+	<head>
+		{% if title %}
+		<title>{{ title }} - expense tracker</title>
+		{% else %}
+		<title>Welcome to expense tracker</title>
+		{% endif %}
+	</head>
+	<body>
+		<div>Expense Tracker: <a href="/index">Home</a></div>
+		<hr>
+		{% block content %}{% endblock %}
+	</body>
+</html>

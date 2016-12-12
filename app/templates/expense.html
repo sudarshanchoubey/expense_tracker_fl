@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Add Expense</h1>
+<form action="" method="post" name="addexpense">
+  {{ form.hidden_tag() }}
+  <p>
+  Description: {{ form.description(size=100) }}<br>
+  Amount: {{ form.amount }} <br>
+  Date: {{ form.date_of_purchase }}<br>
+  Tags: {{ form.expense_tags }}<br>
+  </p>
+  <p><input type="submit" value="Save"></p>
+</form>
+{% endblock %}
