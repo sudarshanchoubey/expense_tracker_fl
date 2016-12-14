@@ -7,7 +7,13 @@
 		{% endif %}
 	</head>
 	<body>
-		<div>Expense Tracker: <a href="/index">Home</a></div>
+		<div>Expense Tracker:
+            <a href="/index">Home</a>
+            {% if g.user.is_authenticated %}
+            | <a href="{{ url_for('user', nickname=g.user.nickname) }}">Your Profile</a>
+            | <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        </div>
 		<hr>
 		{% block content %}{% endblock %}
 	</body>

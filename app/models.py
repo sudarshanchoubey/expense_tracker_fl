@@ -18,6 +18,11 @@ class User(UserMixin, db.Model):
 def load_user(id):
     return User.query.get(int(id))
 
+tags_table = db.Table('tag_table',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+    db.Column('expense_id', db.Integer, db.ForeignKey('expense.id'))
+)
+
 
 class Expense(db.Model):
     __tablename__ = 'expenses'
@@ -26,7 +31,7 @@ class Expense(db.Model):
     description = db.Column(db.String(140), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    tags = db.relationship('Tag', backref='for_expense', lazy='dynamic')
+    tags = db.relationship('Tag', secondary=tags_table, backref=db.backref('for_expenses', lazy='dynamic'))
 
     def __repr__(self):
         return "<Expense {0}: {1}>".format(self.description, self.amount)
@@ -37,3 +42,4 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(64), nullable=False)
     expense_id = db.Column(db.Integer, db.ForeignKey('expenses.id'))
+
