@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="container">
   <h1>Add Expense</h1>
 <form action="" method="post" name="addexpense">
+    <fieldset>
   {{ form.hidden_tag() }}
   <p>
   Description: {{ form.description }}<br>
@@ -10,5 +12,7 @@
   Tags: {{ form.expense_tags }}<br>
   </p>
   <p><input type="submit" value="Save"></p>
+    </fieldset>
 </form>
+</div>
 {% endblock %}

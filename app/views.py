@@ -1,5 +1,5 @@
 from app import app, db, lm
-from flask import render_template, redirect, url_for, g
+from flask import render_template, redirect, url_for, g, flash
 from .forms import ExpenseForm
 from .oauth import OAuthSignIn
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -50,6 +50,7 @@ def add_update_expense():
                 db.session.add(t)
         db.session.add(expense)
         db.session.commit()
+        flash('Your expense has been saved.')
         return redirect(url_for('user', nickname=g.user.nickname))
     print("form was invalid")
     for err in form.errors:
@@ -75,6 +76,10 @@ def oauth_callback(provider):
         return redirect(url_for('login'))
     user = User.query.filter_by(social_id=social_id).first()
     if not user:
+        user_nick = User.query.filter_by(nickname=username).first()
+        if user_nick != None:
+            flash('user with same nickname already exists, try a different provider')
+            return redirect(url_for('login'))
         user = User(social_id=social_id, nickname=username, email=email)
         db.session.add(user)
         db.session.commit()

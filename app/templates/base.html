@@ -5,16 +5,41 @@
 		{% else %}
 		<title>Welcome to expense tracker</title>
 		{% endif %}
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body>
-		<div>Expense Tracker:
-            <a href="/index">Home</a>
+        <div class="container">
+		<div class="navbar">
+		<div class="navbar-inner">
+            <a class="brand" href="#">Expense Tracker:</a>
+            <ul class="nav">
+                <li><a href="/index">Home</a></li>
             {% if g.user.is_authenticated %}
-            | <a href="{{ url_for('user', nickname=g.user.nickname) }}">Your Profile</a>
-            | <a href="{{ url_for('logout') }}">Logout</a>
+            <li><a href="{{ url_for('user', nickname=g.user.nickname) }}">Your Profile</a></li>
+            <li><a href="{{ url_for('add_update_expense', nickname=g.user.nickname) }}">Add Expense</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
             {% endif %}
         </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <div class="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <li>{{ message }} </li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
 		<hr>
 		{% block content %}{% endblock %}
+        </div>
 	</body>
 </html>

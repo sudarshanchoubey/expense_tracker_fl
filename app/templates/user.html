@@ -1,6 +1,6 @@
 <!-- extend base layout -->
 {% extends "base.html" %}
-
+<div class="container">
 {% block content %}
 <h1>User: {{ user.nickname }}!</h1>
 <hr>
@@ -11,6 +11,8 @@
     <p>
        Amount: {{ expense.amount }}</br>
        Description: {{ expense.description }}</br>
+       Date: {{ expense.timestamp.strftime('%d-%m-%Y') }}</br>
     </p>
     {% endfor %}
+</div>
 {% endblock %}
