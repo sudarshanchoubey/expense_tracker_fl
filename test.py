@@ -21,17 +21,20 @@ class TestCase(unittest.TestCase):
         e = Expense(description="Lehenga", amount=7000.0, spender=u, timestamp=datetime.datetime.now())
         db.session.add(e)
         db.session.commit()
-        t1 = Tag(body="marriage", for_expense=e)
-        t2 = Tag(body="clothes", for_expense=e)
+        t1 = Tag(body="marriage")
+        t2 = Tag(body="clothes")
+        e.tags.append(t1)
+        e.tags.append(t2)
         db.session.add(t1)
         db.session.add(t2)
         db.session.commit()
         u = User.query.filter_by(nickname="john").first()
         assert u.social_id == "johndoe"
         flag = False
+        e = None
         for e in u.expenses.all():
             if e.description == "Lehenga":
-                for tg in e.tags.all():
+                for tg in e.tags:
                     if tg.body == "marriage":
                         flag = True
                 break
