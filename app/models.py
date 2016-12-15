@@ -19,8 +19,8 @@ def load_user(id):
     return User.query.get(int(id))
 
 tags_table = db.Table('tag_table',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-    db.Column('expense_id', db.Integer, db.ForeignKey('expense.id'))
+    db.Column('tag_id', db.Integer, db.ForeignKey('tags.id')),
+    db.Column('expense_id', db.Integer, db.ForeignKey('expenses.id'))
 )
 
 
@@ -41,5 +41,4 @@ class Tag(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(64), nullable=False)
-    expense_id = db.Column(db.Integer, db.ForeignKey('expenses.id'))
 

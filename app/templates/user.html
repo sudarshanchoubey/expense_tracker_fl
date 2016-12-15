@@ -1,0 +1,16 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>User: {{ user.nickname }}!</h1>
+<hr>
+    <p>
+    Email:{{ user.email }}</br>
+    </p>
+    {% for expense in expenses %}
+    <p>
+       Amount: {{ expense.amount }}</br>
+       Description: {{ expense.description }}</br>
+    </p>
+    {% endfor %}
+{% endblock %}

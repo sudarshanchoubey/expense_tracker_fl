@@ -4,7 +4,7 @@
 <form action="" method="post" name="addexpense">
   {{ form.hidden_tag() }}
   <p>
-  Description: {{ form.description(size=100) }}<br>
+  Description: {{ form.description }}<br>
   Amount: {{ form.amount }} <br>
   Date: {{ form.date_of_purchase }}<br>
   Tags: {{ form.expense_tags }}<br>

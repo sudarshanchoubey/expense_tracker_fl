@@ -32,22 +32,28 @@ def login():
 def add_update_expense():
     form = ExpenseForm()
     if form.validate_on_submit():
+        print("Form is valid")
         if form.timestamp.data == None:
             ts = datetime.datetime.now()
+            print("Date time was not specified")
         else:
             ts = datetime.datetime(form.timestamp.data)
         expense = Expense(spender=g.user, description=form.description.data, amount=form.amount.data, timestamp=ts)
-        if form.tags.data != None:
-            tags_arr = form.tags.data.rsplit()
+        if form.expense_tags.data != None:
+            tags_arr = form.expense_tags.data.rsplit()
             for a_tag in tags_arr:
                 t = Tag.query.filter_by(body=a_tag).first()
                 if t == None:
                     t = Tag(body=a_tag)
+                print("Tag: {0}".format(t.body))
                 expense.tags.append(t)
                 db.session.add(t)
         db.session.add(expense)
         db.session.commit()
         return redirect(url_for('user', nickname=g.user.nickname))
+    print("form was invalid")
+    for err in form.errors:
+        print(err)
     return render_template('expense.html', form=form)
 
 @app.route('/logout')
